@@ -121,6 +121,10 @@ const AddButton = styled.button`
     margin-bottom: 4px;
     margin-left: 0.5px;
   }
+
+  &:hover {
+    background-color: rgb(198, 198, 198);
+  }
 `;
 const GroupWatchButton = styled(AddButton)`
   background-color: rgb(0, 0, 0);

@@ -1,12 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import { selectMovies } from "../features/movie/MovieSlice";
+import { useSelector } from "react-redux";
 
 function Movies() {
+  const movies = useSelector(selectMovies);
+  console.log("This is movies", movies);
   return (
     <Container>
       <h4>Recomended for You</h4>
       <Content>
-        <Wrap>
+        {movies &&
+          movies.map((movie) => (
+            <Wrap key={movie.id}>
+              <img src={movie.CardImg} />
+            </Wrap>
+          ))}
+        {/* <Wrap>
           <img src="/images/cowboy-bebop3.jpg" alt="" srcset="" />
         </Wrap>
         <Wrap>
@@ -29,7 +39,7 @@ function Movies() {
         </Wrap>
         <Wrap>
           <img src="/images/cowboy-bebop3.jpg" alt="" srcset="" />
-        </Wrap>
+        </Wrap> */}
       </Content>
     </Container>
   );
