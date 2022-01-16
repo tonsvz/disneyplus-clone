@@ -3,12 +3,12 @@ import styled from "styled-components";
 function header() {
   return (
     <Nav>
-      <a href="#">
+      <a href="/">
         <Logo src="/images/logo.svg" />
       </a>
 
       <NavMenu>
-        <a href="#">
+        <a href="/">
           <img src="/images/home-icon.svg" alt="" />
           <span>HOME</span>
         </a>
