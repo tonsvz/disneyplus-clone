@@ -1,39 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import { useParams } from "react-router-dom";
+import db from "../firebase";
 function Detail() {
+  const { id } = useParams();
+  const [movie, setMovie] = useState();
+  useEffect(() => {
+    //Grab Movies from DB of Firebase
+    db.collection("Movies")
+      .doc(id)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          //Save the movie data
+          setMovie(doc.data());
+        } else {
+          //redirect to homepage
+        }
+      });
+  }, []);
+
   return (
     <Container>
-      <Background>
-        <img src="/images/cowboy_front3.jpg" alt="" srcset="" />
-      </Background>
-      <ImageTitle>
-        <img src="/images/disney-cb2.png" alt="" />
-      </ImageTitle>
-      <Controls>
-        <PlayButton>
-          <img src="/images/play-icon-black.png" alt="" />
-          <span>Play</span>
-        </PlayButton>
-        <TrailerButton>
-          <img src="/images/play-icon-white.png" alt="" />
-          <span>Trailer</span>
-        </TrailerButton>
-        <AddButton>
-          <span>+</span>
-        </AddButton>
-        <GroupWatchButton>
-          <img src="/images/group-icon.png" alt="" />
-        </GroupWatchButton>
-      </Controls>
+      {movie && (
+        <>
+          <Background>
+            <img src={movie.BackgroundImg} />
+          </Background>
+          <ImageTitle>
+            <img src={movie.TitleImg} />
+          </ImageTitle>
+          <Controls>
+            <PlayButton>
+              <img src="/images/play-icon-black.png" alt="" />
+              <span>Play</span>
+            </PlayButton>
+            <TrailerButton>
+              <img src="/images/play-icon-white.png" alt="" />
+              <span>Trailer</span>
+            </TrailerButton>
+            <AddButton>
+              <span>+</span>
+            </AddButton>
+            <GroupWatchButton>
+              <img src="/images/group-icon.png" alt="" />
+            </GroupWatchButton>
+          </Controls>
 
-      <Subtitle>1996 • 26m • Animation, Space, Teen, Japan</Subtitle>
-      <Description>
-        Set in 2071 and centered on the adventures of a gang of bounty hunters
-        in space, the story delves into the unresolved issues of the
-        protagonists' past, exploring concepts such as existentialism, boredom,
-        loneliness, and the influence of the past.
-      </Description>
+          <Subtitle>{movie.Genres}</Subtitle>
+          <Description>{movie.Description}</Description>
+        </>
+      )}
     </Container>
   );
 }
